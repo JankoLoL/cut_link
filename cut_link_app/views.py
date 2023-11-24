@@ -3,14 +3,15 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
+from django.contrib.auth.views import LoginView
 
 from .forms import RegisterForm, UrlSubmitForm
 
 
 class RegisterView(generic.CreateView):
     form_class = RegisterForm
-    success_url = reverse_lazy('login')
-    template_name = 'registration/register.html'
+    success_url = reverse_lazy('home')
+    template_name = 'register.html'
 
 
 class UrlSubmitView(LoginRequiredMixin, FormView):
@@ -27,3 +28,9 @@ class UrlSubmitView(LoginRequiredMixin, FormView):
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
+
+
+class CustomLoginView(LoginView):
+    template_name = 'login.html'
+    redirect_authenticated_user = True
+    success_url = reverse_lazy('home')
