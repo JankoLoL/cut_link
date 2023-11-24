@@ -1,0 +1,8 @@
+{% extends '__base__.html' %}
+
+{% block content %}
+    <h1>URL Detail</h1>
+    <p>Original URL: {{ shortened_url.original_url }}</p>
+    <p>Shortened URL: <a href="{% url 'url_redirect' shortened_url.shortened_id %}">{{ request.build_absolute_uri|cut:'/' }}{{ shortened_url.shortened_id }}</a></p>
+    <a href="{% url 'home' %}">Main page</a>
+{% endblock %}
