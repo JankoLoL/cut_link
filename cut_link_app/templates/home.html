@@ -4,6 +4,28 @@
 
 {% block content %}
     <h1>Welcome to Cut Link</h1>
-    <p>Your go-to URL shortening service.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Shorten URL</button>
+    </form>
+
+    {% if shortened_urls %}
+        <h2>Your Shortened URLs</h2>
+        <ul>
+            {% for url in shortened_urls %}
+                <li>
+                    <a href="{% url 'url_redirect' url.shortened_id %}">{{ url.shortened_id }}</a>- {{ url.original_url }}
+                    <form action="{% url 'url_delete' url.pk %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not shortened any URLs yet.</p>
+    {% endif %}
+    <a href="{% url 'logout' %}">Logout</a>
 
 {% endblock content %}
