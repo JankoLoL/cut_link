@@ -5,6 +5,7 @@ from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import FormView, DeleteView
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth import login
 
 from .forms import RegisterForm, UrlSubmitForm
 from .models import ShortenedUrl
@@ -12,8 +13,15 @@ from .models import ShortenedUrl
 
 class RegisterView(generic.CreateView):
     form_class = RegisterForm
-    success_url = reverse_lazy('home')
     template_name = 'register.html'
+
+    def form_valid(self, form):
+        user = form.save()
+        if user.is_active:
+            login(self.request, user)
+            return redirect('home')
+        else:
+            return redirect('login')
 
 
 class UrlSubmitView(LoginRequiredMixin, FormView):
