@@ -20,12 +20,13 @@
                         {% csrf_token %}
                         <input type="submit" value="Delete" onclick="return confirm('Are you sure?');">
                     </form>
+                <a href="{% url 'url_detail' url.pk %}">Detail</a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>You have not shortened any URLs yet.</p>
     {% endif %}
-    <a href="{% url 'logout' %}">Logout</a>
+    <button>Logout</button>
 
 {% endblock content %}
