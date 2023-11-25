@@ -9,7 +9,6 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(next_page='home'), name='login'),
     path('submit-url/', UrlSubmitView.as_view(), name='submit_url'),
-    path('', HomePageView.as_view(), name='home'),
     path('<str:shortened_id>/', UrlRedirectView.as_view(), name='url_redirect'),
     path('url-detail/<int:pk>/', UrlDetailView.as_view(), name='url_detail'),
     path('delete/<int:pk>/', UrlDeleteView.as_view(), name='url_delete'),

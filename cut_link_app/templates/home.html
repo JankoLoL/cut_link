@@ -16,16 +16,24 @@
             {% for url in shortened_urls %}
                 <li>
                     <a href="{% url 'url_redirect' url.shortened_id %}">{{ url.shortened_id }}</a>- {{ url.original_url }}
+                    <form method="get" action="{% url 'url_detail' url.pk %}" style="display: inline;">
+                        <button type="submit">Detail</button>
+                    </form>
                     <form action="{% url 'url_delete' url.pk %}" method="post" style="display: inline;">
                         {% csrf_token %}
                         <input type="submit" value="Delete" onclick="return confirm('Are you sure?');">
                     </form>
+
                 </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>You have not shortened any URLs yet.</p>
     {% endif %}
-    <a href="{% url 'logout' %}">Logout</a>
+    <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+
 
 {% endblock content %}
