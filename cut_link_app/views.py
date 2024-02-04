@@ -62,13 +62,13 @@ class CustomLoginView(LoginView):
     success_url = reverse_lazy('home')
 
 
-class UrlDetailView(DetailView):
+class UrlDetailView(DetailView, LoginRequiredMixin):
     model = ShortenedUrl
     template_name = 'url_detail.html'
     context_object_name = 'shortened_url'
 
 
-class UrlRedirectView(View):
+class UrlRedirectView(View, LoginRequiredMixin):
     def get(self, request, shortened_id):
         url = get_object_or_404(ShortenedUrl, shortened_id=shortened_id)
         return redirect(url.original_url)
